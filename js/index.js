@@ -11,6 +11,12 @@ document.addEventListener("DOMContentLoaded", function(){
         localStorage.setItem("catID", 103);
         window.location = "products.html"
     });
+    let mmail = localStorage.getItem('mail');
+    let spanM = document.getElementById('mailNB');
+    if (mmail != null)
+    {
+    spanM.innerHTML = `${mmail}`;
+    }
 });
 
 document.addEventListener("DOMContentLoaded",function(){
@@ -18,4 +24,4 @@ document.addEventListener("DOMContentLoaded",function(){
         alert("Usted no ha iniciado sesión.")
         window.location.href = 'login.html'
     }
-})
+});

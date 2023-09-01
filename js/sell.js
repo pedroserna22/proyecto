@@ -22,7 +22,7 @@ function updateTotalCosts(){
     unitProductCostHTML.innerHTML = unitCostToShow;
     comissionCostHTML.innerHTML = comissionToShow;
     totalCostHTML.innerHTML = totalCostToShow;
-}
+};
 
 //Función que se ejecuta una vez que se haya lanzado el evento de
 //que el documento se encuentra cargado, es decir, se encuentran todos los
@@ -66,6 +66,12 @@ document.addEventListener("DOMContentLoaded", function(e){
         updateTotalCosts();
     });
 
+    let mmail = localStorage.getItem('mail');
+    let spanM = document.getElementById('mailNB');
+    if (mmail != null)
+    {
+    spanM.innerHTML = `${mmail}`;
+    }
 
     //Configuraciones para el elemento que sube archivos
     let dzoptions = {
