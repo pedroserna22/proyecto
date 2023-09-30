@@ -3,25 +3,36 @@ let URLProducto = `https://japceibal.github.io/emercado-api/products/${localStor
 let URLComentario = `https://japceibal.github.io/emercado-api/products_comments/${localStorage.getItem('prodID')}.json`;
 // Referencias a elementos del DOM
 let contenedor = document.getElementById("contenedorProductInfo");
-let contenidoProducto = "";
+let contenedorProdRel = document.getElementById("productosRelacionados");
 let InputComentario = document.getElementById("comentarioUsu");
 let btnSendComentario = document.getElementById("btnComentario");
+// variables vacías que usarán en funciones para cargar los Productos y Productos Relacionados
+let contenidoProducto = "";
+let contenidoProdRel = "";
 
 // Función para obtener y mostrar información del producto desde la URL
-function FetchURLProducto(){
-    return ( fetch(URLProducto) 
-        .then ( function(response) {
+function FetchURLProducto() {
+    return (fetch(URLProducto)
+        .then(function (response) {
             return response.json();
         })
-        .then(function(data){
+        //Acá se procesan los datos de imágenes y se genera HTML dinámico por medio de un for, esto para el carrusel de imágenes
+        .then(function (data) {
             let InnerImg = ``;
-            for (let j = 0; j < data.images.length; j++){
+            let ProdRel = ``;
+            for (let j = 0; j < data.images.length; j++) {
+                const activeClass = j === 0 ? 'active' : '';
                 InnerImg += `
-                    <div class="imagenesProducto">
-                        <img src="${data.images[j]}" alt=""/> 
+                <div class="carousel-item ${activeClass}" data-bs-interval="10000"> 
+                    <img src="${data.images[j]}" class="d-block w-75 mx-auto" alt="Image ${j + 1}">
+                    <div class="carousel-caption d-none d-md-block">                     
                     </div>
+                </div>
                 `;
             }
+            // Este fragmento de código genera dinámicamente el contenido HTML para mostrar la información del producto y productos relacionados en una página web
+
+            // Se crea una variable para almacenar el contenido del producto
             contenidoProducto += `
                 <section class="nombreDelProducto">
                     <h1>${data.name}</h1>
@@ -37,15 +48,68 @@ function FetchURLProducto(){
                 <section class="continuacionImagenes">
                     <p><strong>Las siguientes imágenes son meramente ilustrativas</strong></p>
                 </section>
-                <section class="imagenesDelProducto">
-                ` + InnerImg + `
-                </section>
+                
+                <div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
+                    <div class="carousel-indicators">
+                        ${generateIndicators(data.images.length)}
+                    </div>
+                    <div class="carousel-inner">
+                    ` + InnerImg + `
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
             `;
-            contenedor.innerHTML = contenidoProducto;
+
+            // Se crea una variable para almacenar el contenido de productos relacionados
+            ProdRel += `
+                <a href="product-info.html" id="ProductoRelacionado0">
+                    <img class="imgProdRelacionado" src="${data.relatedProducts[0].image}" alt=""/>
+                    <p class="parrafoProdRelacionado">${data.relatedProducts[0].name}</p>
+                </a>
+                <a href="product-info.html" id="ProductoRelacionado1">
+                    <img class="imgProdRelacionado" src="${data.relatedProducts[1].image}" alt=""/>
+                    <p class="parrafoProdRelacionado">${data.relatedProducts[1].name}</p>
+                </a>
+            `;
+            contenedor.innerHTML = contenidoProducto; // Muestra la información del producto
+            contenidoProdRel += ProdRel; // Agrega los productos relacionados al contenido
+            contenedorProdRel.innerHTML = contenidoProdRel; // Muestra los productos relacionados
+
+            // Se obtienen los elementos HTML para los enlaces de productos relacionados
+            let linkProdRel0 = document.getElementById("ProductoRelacionado0");
+            let linkProdRel1 = document.getElementById("ProductoRelacionado1");
+
+            // Se agrega un evento de click a los enlaces de productos relacionados para navegar entre ellos
+            linkProdRel0.addEventListener("click", function(){
+                localStorage.setItem("prodID", data.relatedProducts[0].id);
+            });
+            linkProdRel1.addEventListener("click", function(){
+                localStorage.setItem("prodID", data.relatedProducts[1].id);
+            });
         })
         .catch(function(error){
             console.error("Ocurrio el siguiente error: ", error);
         })); 
+
+        // Esta función crea indicadores para el carrusel de imágenes en base al número de imágenes proporcionadas
+        function generateIndicators(num) {
+            let indicators = '';
+            for (let i = 0; i < num; i++) {
+                // Se establece la clase 'active' para el primer indicador
+                const activeClass = i === 0 ? 'active' : '';
+                indicators += `<div class="bbfoto">
+                <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="${i}" class="${activeClass} " aria-label="Slide ${i + 1}"></button>
+                </div>`;
+            }
+            return indicators;
+        }
 }
 
 // Función para obtener y mostrar comentarios desde la URL
@@ -148,9 +212,11 @@ btnSendComentario.addEventListener("click", function(e){
             </strong>
         </p>
     `;
-
+    // Se crea un elemento divAux con la clase "Comentario" y se le asigna el contenido del comentario
     divAux.classList.add("Comentario");
     divAux.innerHTML = comentario;
+
+    // Se verifica si el comentario tiene una longitud igual a cero (está vacío), y según la condición aparecerá error o se agrega el comentario
     if (valorComentario.length == 0) {
         Swal.fire({
             icon: 'error',
@@ -166,3 +232,4 @@ btnSendComentario.addEventListener("click", function(e){
         InputComentario.value = "";
     }
 });
+
