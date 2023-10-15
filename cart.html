@@ -10,6 +10,7 @@
   <link href="css/font-awesome.min.css" rel="stylesheet">
   <link href="css/styles.css" rel="stylesheet">
   <link rel="shortcut icon" href="img/PestañaICONO.ico"/>
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
 
 <body>
@@ -46,18 +47,83 @@
                   <img class="mode" src="img/mode.png" alt="Modo Oscuro">
                 </a>
               </li>
-            </ul>
+            </div>
           </div>           
         </ul>
       </div>
     </div>
   </nav>
   <main>
-    <div class="container">
-      <div class="alert alert-danger text-center" role="alert">
-        <h4 class="alert-heading">Funcionalidad en desarrollo</h4>
-      </div>
+    <div class="text-center p-4">
+      <h2>Carrito de compras</h2>
+      <p class="lead">Artículos a comprar</p>
     </div>
+    <div class="container mt-5" id="containerTable">
+      <div class="row justify-content-center" id="tablacart">
+        <div class="table-responsive">
+        <table  class="table table-hover">
+          <thead>
+            <tr>
+              <th scope="col">Imagen</th>
+              <th scope="col">Nombre</th>
+              <th scope="col">Costo</th>
+              <th scope="col">Cantidad</th>
+              <th scope="col">Subtotal</th>
+              <th scope="col">Borrar</th>
+            </tr>
+          </thead>
+          <tbody id="formCarrito">
+          </tbody>
+        </table>
+        </div>
+        </div>
+      </div>
+      <form id="formularioCompra">
+        <div class="form-row justify-content-center">
+          <div class="text-center p-4">
+            <h4 class="text-capitalize text-center p-4">Datos de envío</h4>
+            <hr>
+          </div>
+          <div class="form-group col-md-6 contenedorFormCompra">
+            <label for="inputAddress">País</label>
+            <input type="text" class="form-control" id="inputAddress">
+          </div>
+          <div class="form-group col-md-6 contenedorFormCompra">
+            <label for="inputCity">Ciudad</label>
+            <input type="text" class="form-control" id="inputCity">
+          </div>
+          <div class="form-group col-md-12 contenedorFormCompra">
+            <label for="inputState">Dirección</label>
+            <input type="text" class="form-control" id="inputCity">
+          </div>
+          <div class="form-group col-md-6 contenedorFormCompra">
+            <label for="inputZip">Zip</label>
+            <input type="text" class="form-control" id="inputZip">
+          </div>
+          <div class="text-center p-4 TablaDescuento">
+            <h4 class="text-capitalize">Tipo de envío</h4>
+            <hr>
+            <div class="OpcionesDeDescuento">
+              <div class="OpcionASeleccionar">
+                <input id="Seleccionradio1" type="radio" name="opciones" value="op1">
+                <label for="Seleccionradio1">Premium de 2 a 5 días (15%)</label>
+              </div>
+              <div class="OpcionASeleccionar">
+                <input id="Seleccionradio2" type="radio" name="opciones" value="op2">
+                <label for="Seleccionradio2">Express de 5 a 8 días (7%)</label>
+              </div>
+              <div class="OpcionASeleccionar">
+                <input id="Seleccionradio3" type="radio" name="opciones" value="op3">
+                <label for="Seleccionradio3">Standard de 12 a 15 días (5%)</label>
+              </div>
+            </div>
+          </div>
+          <div class="form-group contenedorFormCompra">
+            <br>
+            <button type="submit" class="btn btn-primary" id="btnFinalizarCompra">Finalizar compra</button>
+          </div>
+        </div>
+      </form>
   </main>
   <footer class="text-muted">
     <div class="container">
