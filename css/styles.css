@@ -5,6 +5,10 @@
   font-family: 'Verdana', serif !important;
 }
 
+.auxNone {
+  display: none;
+}
+
 .navBarAUX { /* Este Auxiliar es para product-info.html */
   justify-content: space-evenly;
 }
@@ -695,6 +699,40 @@ body.modo-oscuro {
   }
 }
 
+/* BotonComprar Producto */
+
+.contbtnComprarProducto {
+  display: flex;
+  width: 50%;
+  margin: 90px auto 0 auto;
+  justify-content: center;
+}
+
+#btnComprarProducto {
+  width: 80%;
+  padding: 10px 0;
+  border: 1px solid #000;
+  border-radius: 7px;
+  background-color: #F09100;
+  margin-top: -40px;
+}
+
+@media (min-width: 768px) {
+  .btnComprarProducto {
+    width: 30%;
+  }
+}
+
+#btnComprarProducto:hover {
+  background-color: #f07400;
+  cursor: pointer;
+}
+
+#btnComprarProducto i
+{
+  font-size: 38px;
+}
+
 /* Comentario del JS*/
 
 .contenedorComentario {
@@ -904,5 +942,64 @@ body.modo-oscuro {
   .productosRelacionados img:nth-child(1) {
     margin-top: 0px;
   }
+}
+
+/* Tabla Bootstrap*/
+
+#imgProdComprar > img {
+  width: 100px;
+  height: 60px;
+}
+
+#cantidadDeProductos {
+  width: 60px;
+  text-align: center;
+}
+
+#formularioCompra { 
+  margin: 0 auto;
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  margin-top: 60px;
+  border: 1px solid #000;
+  border-radius: 3px;
+}
+
+@media (min-width: 1000px) {
+  #formularioCompra {
+      width: 50%;
+    }
+}
+
+.TablaDescuento {
+  margin-top: 30px;
+}
+
+.OpcionASeleccionar {
+  padding: 5px 0;
+}
+
+#tablacart {
+  border: 1px solid #ddd; 
+  padding: 10px; 
+}
+
+.contenedorFormCompra {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  margin: 0 auto;
+}
+
+.table-hover tbody tr:hover {
+  background-color: #FFE0B2;
+}
+
+#btnFinalizarCompra {
+  border-radius: 7px;
+  background-color: #F09100;
+  border-color: #000;
+  margin-bottom: 20px;
 }
 
