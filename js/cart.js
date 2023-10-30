@@ -92,12 +92,9 @@ async function fetchOtrosProductos() {
                     `;
                 }
                 // Obtiene elementos relevantes dentro de la fila
-                const cantidadInput = auxRow.querySelector(`#cantidadDeProductos${id}`);
-                
+                const cantidadInput = auxRow.querySelector(`#cantidadDeProductos${id}`);              
                 const subTotalElem = auxRow.querySelector(`#subTotalProdComprar${id}`);
-
-                const costoProd = auxRow.querySelector(`costProdComprar${id}`)
-                
+                const costoProd = auxRow.querySelector(`costProdComprar${id}`)               
                 const btnBorrarElemento = auxRow.querySelector("#elimProdComprar");
                 
                 cantidadInput.addEventListener("input", function() {
@@ -108,9 +105,6 @@ async function fetchOtrosProductos() {
                     console.log(nuevoSubtotal)
                     subTotalElem.textContent = `${data.currency} ${nuevoSubtotal}`;
                 });
-         
-               
-
                 // Agrega la fila de tabla al carrito
                 formCarrito.appendChild(auxRow);
                 // Agrega un evento al botón de eliminar para quitar el producto
@@ -126,27 +120,13 @@ async function fetchOtrosProductos() {
                         localStorage.setItem("idComprado", JSON.stringify(idComprado));
                     }
                 })
-                
-
-                
-                
-                
-
                 function dolaresAPesos(dolares) {
                     return dolares * 39.9;
                 }
 
                 function pesosADolares(pesos) {
                     return pesos / 0.025;
-                }
-
-                
-                
-                    
-                    
-                
-               
-                
+                }                        
             })
             .catch(function(error) {
                 console.error("Ocurrió el siguiente error: ", error);
@@ -168,7 +148,6 @@ async function fetchOtrosProductos() {
     }
         const contSubTotal= document.getElementById("MuestreoSubTotal")
         contSubTotal.innerHTML = `USD ${subTotal.toFixed()}`
-     
      
         let porcentajeEnvio = 0;
         let costoEnvio = 0;
@@ -192,7 +171,7 @@ async function fetchOtrosProductos() {
 }
 
 const tagProductos = document.getElementsByTagName("tbody")
-                console.log(tagProductos)
+
 document.addEventListener("click",function subTotal() {
                     
     const products = document.getElementsByClassName("subTotal")
@@ -229,9 +208,7 @@ document.addEventListener("click",function subTotal() {
     let total = subTotal + costoEnvio;
     contenedorDelEnvio.textContent = `USD ${costoEnvio.toFixed()}`
     
-    contenedorTotal.textContent = `USD  ${total.toFixed()}`;
-      
-    
+    contenedorTotal.textContent = `USD  ${total.toFixed()}`;        
 });
 
     //habilitar deshabilitar campos del modal
@@ -279,49 +256,6 @@ document.addEventListener("click",function subTotal() {
             formaDePago.textContent = "No ha seleccionado";
         }
     }
-    
-
-    // Validaciones que realiza el botón finalizar compra
-    // document.getElementById('btnFinalizarCompra').addEventListener('click', function() {
-    //     // Obtener valores de los campos
-    //     const calle = document.getElementById('calle').value;
-    //     const numero = document.getElementById('numero').value;
-    //     const esquina = document.getElementById('esquina').value;
-    //     const formaEnvio = document.getElementById('formaEnvio').value;
-    //     const cantidadArticulo = document.getElementById('cantidadArticulo').value;
-    //     const formaPago = document.getElementById('formaPago').value;
-    //     const detallesPago = document.getElementById('detallesPago').value;
-    
-    //     // Realizar validaciones
-    //     if (calle.trim() === '' || numero.trim() === '' || esquina.trim() === '') {
-    //         alert('Los campos calle, número y esquina no pueden estar vacíos.');
-    //         return;
-    //     }
-    
-    //     if (formaEnvio === '') {
-    //         alert('Debes seleccionar una forma de envío.');
-    //         return;
-    //     }
-    
-    //     if (parseInt(cantidadArticulo) <= 0 || isNaN(cantidadArticulo)) {
-    //         alert('La cantidad para cada artículo debe ser mayor a 0.');
-    //         return;
-    //     }
-    
-    //     if (formaPago === '') {
-    //         alert('Debes seleccionar una forma de pago.');
-    //         return;
-    //     }
-    
-    //     // Realizar validaciones específicas para la forma de pago seleccionada
-    //     if (formaPago === 'tarjeta' && detallesPago.trim() === '') {
-    //         alert('Debes proporcionar los detalles de la tarjeta de crédito.');
-    //         return;
-    //     }
-    
-    //     // Si todas las validaciones pasan, puedes ejecutar la lógica para enviar el formulario
-    //     alert('Formulario enviado exitosamente!');
-    // });
 
     //Validacion
     (function () {
@@ -344,7 +278,6 @@ document.addEventListener("click",function subTotal() {
               event.preventDefault(); // No permite que se envíe el formulario si es inválido
               event.stopPropagation();
             }
-      
             form.classList.add('was-validated');
           }
           var selectedRadioButton = document.querySelector('input[name="opciones"]:checked');
@@ -376,7 +309,6 @@ document.addEventListener("click",function subTotal() {
           }
         });
       })();
-    
 
 // Evento que se dispara cuando la página se carga completamente
 document.addEventListener("DOMContentLoaded", function() {
@@ -391,12 +323,9 @@ document.addEventListener("DOMContentLoaded", function() {
         });
 });
 
-
-
 let seleccion1 = document.getElementById("Seleccionradio1")
 let seleccion2 = document.getElementById("Seleccionradio2")
 let seleccion3 = document.getElementById("Seleccionradio3")
-
 
 seleccion1.addEventListener("change",function(){
 
@@ -413,7 +342,6 @@ seleccion1.addEventListener("change",function(){
 
     costoEnvio = subTotal * porcentajeEnvio;
     let total = subTotal + costoEnvio;
-    contenedorDelEnvio.textContent = `USD ${costoEnvio.toFixed()}`
-    
+    contenedorDelEnvio.textContent = `USD ${costoEnvio.toFixed()}` 
     contenedorTotal.textContent = `USD  ${total.toFixed()}`;
 })
