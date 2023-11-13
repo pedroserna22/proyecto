@@ -8,27 +8,10 @@
   <link href="https://fonts.googleapis.com/css?family=Raleway:300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <link href="css/styles.css" rel="stylesheet">
-  <link rel="shortcut icon" href="img/PestañaICONO.ico"/>
-  <style>
-    .bd-placeholder-img {
-      font-size: 1.125rem;
-      text-anchor: middle;
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      -ms-user-select: none;
-      user-select: none;
-    }
-
-    @media (min-width: 768px) {
-      .bd-placeholder-img-lg {
-        font-size: 3.5rem;
-      }
-    }
-  </style>
+  <link rel="shortcut icon" href="img/PestañaICONO.ico"/>  
 </head>
 
-<body>
-   <!-- Barra de Navegación de Mi Perfil con menú desplegable, que redirecciona a otras secciones-->
+<body class="d-flex flex-column min-vh-100">
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark p-1">
     <div class="container">
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -67,39 +50,77 @@
       </div>
     </div>
   </nav>
-  <div class="perfil-container">
-    <img src="img/img_perfil.png" alt="Foto de Perfil" class="perfil-foto">
-    <div class="perfil-nombre">Nombre de Usuario</div>
-    <div class="perfil-info">
-      <p><strong>Correo Electrónico:</strong> usuario@example.com</p>
-      <p><strong>Fecha de Nacimiento:</strong> 01 de enero de 1990</p>
-      <p><strong>Fecha de registro:</strong> 01 de enero de 2023</p>
 
-      <p><strong>Ubicación:</strong> Ciudad, País</p>
+  <section class="container d-flex justify-content-center">
+    <div class="col-lg-8 col-12">
+      <h2 class="mt-5 text-center gradient-custom" style="border-radius: .5rem; padding: .5rem;">Perfil</h2>
+    </div>    
+  </section>
 
-      <div class="pais-container">
-        <label for="pais-select"><strong>Seleccionar País:</strong></label>
-        <select id="pais-select">
-          <option value="es">Uruguay</option>
-          <option value="us">Estados Unidos</option>
-          <option value="fr">Francia</option>
-          <option value="de">Alemania</option>
-          <!-- Agrega más opciones de países aquí -->
-        </select>
+  <section class="vh-50 mb-5">
+    <div class="container py-5 h-50">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col col-lg-8 mb-4 mb-lg-0">
+          <div class="card mb-2" style="border-radius: .5rem;">
+            <div class="row g-0">
+              <div class="col-md-4 gradient-custom text-center text-white"
+                style="border-top-left-radius: .5rem; border-bottom-left-radius: .5rem;">
+                <img id="imagenDePerfil" src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"
+                  alt="Avatar" class="img-fluid my-5" style="width: 150px; border-radius: .5rem;" />                
+                <h5 style="color: #000;">Nombre(*)</h5>
+                <input type="text" name="Nombre" id="inpNombre" class="form-control mb-4 input_control" placeholder="Su Nombre" required>
+                <h5 style="color: #000;">Apellido(*)</h5>
+                <input type="text" name="Apellido" id="inpApellido" class="form-control mb-4 input_control" placeholder="Su Apellido" required>
+              </div>
+              <div class="col-md-8">
+                <div class="card-body p-4">
+                  <h6>Información</h6>
+                  <hr class="mt-0 mb-4">
+                  <div class="row pt-1">
+                    <div class="col-12 col-sm-6 mb-3">
+                      <h6>Segundo nombre</h6>
+                      <input type="text" name="SegundoNombre" id="inpSegundoNombre" class="form-control " placeholder="Segundo nombre"> 
+                    </div>
+                    <div class="col-12 col-sm-6 mb-3">
+                      <h6>Segundo apellido</h6>
+                      <input type="text" name="SegundoApellido" id="inpSegundoApellido" class="form-control" placeholder="Segundo apellido">
+                    </div>
+                  </div>
+                  <div class="row pt-1">
+                    <div class="col-12 col-sm-6 mb-3">
+                      <h6>Email(*)</h6>
+                      <input type="text" name="Email" id="inpEmail" class="form-control" required>
+                    </div>
+                    <div class="col-12 col-sm-6 mb-3">
+                      <h6>Teléfono(*)</h6>
+                      <input type="text" name="Telefono" id="inpTelefono" class="form-control" placeholder="080012345">
+                    </div>
+                  </div>
+                  <h6 class="text-center">Imagen de perfil</h6>
+                  <div class="input-group mb-4 input_control">      
+                    <input type="file" class="form-control" id="imgPerfil">                    
+                  </div>
+                  <div class="d-flex justify-content-center mt-3">
+                    <button type="button" id="btnGuardar" class="perfil-boton gradient-custom">Guardar cambios</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="idioma-container">
-        <label for="idioma-select"><strong>Seleccionar Idioma:</strong></label>
-        <select id="idioma-select">
-            <option value="es">Español</option>
-            <option value="en">English</option>
-            <option value="fr">Français</option>
-            <option value="de">Deutsch</option>
-        </select>
-        
     </div>
-    <button class="perfil-boton">Editar Perfil</button>
+  </section>
+  <div class="alert alert-success d-none text-center alert-dismissible fade show" role="alert">
+    Cambios guardados correctamente.
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>               
   </div>
-  <footer class="text-muted">
+  <div class="alert alert-danger d-none text-center alert-dismissible fade show" role="alert">
+    Por favor, complete todos los campos obligatorios.
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>               
+  </div>
+
+  <footer class="text-muted mt-5 mt-auto">
     <div class="container">
       <p class="float-end">
         <a href="#">Volver arriba</a>
@@ -108,6 +129,7 @@
       </p>
     </div>
   </footer>
+  
   <script src="js/bootstrap.bundle.min.js"></script>
   <script src="js/init.js"></script>
   <script src="js/my-profile.js"></script>
