@@ -1,14 +1,16 @@
+// Importaciones de los módulos necesarios
 const express = require("express");
 const bodyParser = require('body-parser');
 const jwt = require('jsonwebtoken');
 const fs = require('fs');
 const cors = require('cors');
-/**/
 
+// Creación de la aplicación Express y configuración del puerto
 const app = express();
 const port = 3000;
 
-app.use(cors());
+// Configuración de middlewares
+app.use(cors());// Habilitar CORS
 app.use(cors({
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     allowedHeaders: 'Content-Type,Authorization',
@@ -16,6 +18,10 @@ app.use(cors({
 app.options('/login', cors());
 
 app.use(bodyParser.json());
+
+// Rutas para obtener información de productos y otros datos
+// Cada ruta realiza la lectura de un archivo JSON correspondiente y envía su contenido como respuesta
+// Si hay errores, se manejan devolviendo un mensaje de error y un código de estado 500 (Internal Server Error)
 
 app.get("/emercado-api/cats/cat.json", (req, res) => {
     let archivo = "./data/emercado-api/cats/cat.json";
@@ -89,7 +95,7 @@ app.get("/emercado-api/user_cart/25801.json", (req, res) => {
     }
 });
 
-/* */
+// Array de usuarios
 
 let usuarios = new Array();
 usuarios = [
@@ -108,6 +114,8 @@ usuarios = [
 app.use(bodyParser.json());
 
 // Middleware para verificar el token en la ruta '/cart'
+// Verifica si el token está presente y es válido antes de permitir el acceso a la ruta
+// Si hay problemas con el token, se devuelve un mensaje de error correspondiente
 app.use('/cart', (req, res, next) => {
     try {
         // Obtener el token del encabezado de la solicitud
@@ -160,34 +168,55 @@ app.get('/cart', (req, res) => {
     res.json({ message: 'Acceso a la ruta protegida permitido' });
 });
 
+// Configuración de la conexión a la base de datos MariaDB utilizando 'mariadb'
 const mariadb = require('mariadb');
 const pool = mariadb.createPool({host: "localhost", user: "root", password: "1234", database: "proyecto", connectionLimit: 10});
 app.use(express.json());
 
+// Ruta para agregar productos al carrito
+// Procesa la solicitud POST y actualiza el carrito con los elementos recibidos
 app.post('/cart', async (req, res) => {
+    let con; 
+
     try {
-        const con = await pool.getConnection();
+        con = await pool.getConnection();
+        // Obtiene el arreglo de productos del cuerpo de la solicitud
         const cartItems = req.body.arrayDeProductos; 
         console.log(cartItems);
-
+        // Validación del arreglo de productos
         if (!Array.isArray(cartItems) || cartItems.length === 0) {
             throw new Error('Cart items is not a valid array or is empty.');
         }
-
+         // Itera sobre los elementos del carrito y realiza inserciones en la base de datos
         for (const item of cartItems) {
+            // Realiza una inserción en la tabla 'carrito' dependiendo del nombre del producto
+            if(item.name != 'Peugeot 208')
+            {
+            const { id, name, cost, currency, images } = item;
+            const image = Array.isArray(images) && images.length > 0 ? images[0] : '';
+        
             await con.query('INSERT INTO carrito (id, name, unitCost, currency, image, count) VALUES (?, ?, ?, ?, ?, ?)',
+                [id, name, cost, currency, image, "1"]);
+            }
+            else
+            {
+                await con.query('INSERT INTO carrito (id, name, unitCost, currency, image, count) VALUES (?, ?, ?, ?, ?, ?)',
                 [item.id, item.name, item.unitCost, item.currency, item.image, item.count]);
+            }
         }
-
-        con.release();
         res.status(200).json({ message: 'Carrito actualizado con éxito' });
+    
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: 'Error al actualizar el carrito' });
+    } finally {
+        if (con) {
+            con.release(); 
+        }
     }
 });
 
-
+// Inicia el servidor y lo hace escuchar en el puerto especificado
 app.listen(port, function() {
     console.log(`Servidor se esta escuchando en el puerto ${port}`);
 });
